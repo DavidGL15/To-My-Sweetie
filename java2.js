@@ -182,3 +182,54 @@ $(document).ready(function(){
     }, "slow");
   });
 });
+
+// En tu archivo JS principal (ejecuta esto en ambas páginas)
+document.addEventListener('DOMContentLoaded', function() {
+const bgMusic = document.getElementById('bg-music');
+bgMusic.currentTime = 30; // Segundos
+
+// Asegurar que no se reinicie al cambiar de página
+window.addEventListener('beforeunload', () => {
+  sessionStorage.setItem('musicTime', bgMusic.currentTime);
+});
+
+window.addEventListener('load', () => {
+  const savedTime = sessionStorage.getItem('musicTime');
+  if (savedTime) {
+    bgMusic.currentTime = parseFloat(savedTime);
+  } else {
+    bgMusic.currentTime = 30; // Inicio por defecto a los 90s
+  }
+  bgMusic.play().catch(e => console.log("Autoplay bloqueado:", e));
+});
+  
+  // Intenta reproducir automáticamente y maneja errores
+  function handleAutoplay() {
+    const playPromise = bgMusic.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Si el autoplay falla, espera a que el usuario interactúe con la página
+        document.body.addEventListener('click', function once() {
+          bgMusic.play();
+          document.body.removeEventListener('click', once);
+        });
+      });
+    }
+  }
+
+  // Sincronización entre páginas
+  if (sessionStorage.getItem('musicTime')) {
+    bgMusic.currentTime = parseFloat(sessionStorage.getItem('musicTime'));
+  }
+
+  // Guardar tiempo actual al salir de la página
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('musicTime', bgMusic.currentTime);
+  });
+
+  // Configuración inicial
+  bgMusic.volume = 0.3; // Volumen bajo (30%)
+  handleAutoplay();
+});
+

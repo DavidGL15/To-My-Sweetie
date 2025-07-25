@@ -34,3 +34,49 @@ document.addEventListener('DOMContentLoaded', function() {
     
     createHearts();
 });
+document.addEventListener('DOMContentLoaded', function() {
+  // Reproducir a partir del minuto 1:30 (90 segundos)
+const bgMusic = document.getElementById('bg-music');
+bgMusic.currentTime = 30; // Segundos
+
+// no se reinicia al cambiar de página
+window.addEventListener('beforeunload', () => {
+  sessionStorage.setItem('musicTime', bgMusic.currentTime);
+});
+
+window.addEventListener('load', () => {
+  const savedTime = sessionStorage.getItem('musicTime');
+  if (savedTime) {
+    bgMusic.currentTime = parseFloat(savedTime);
+  } else {
+    bgMusic.currentTime = 30; // Inicio por defecto a los 90s
+  }
+  bgMusic.play().catch(e => console.log("Autoplay bloqueado:", e));
+});
+  
+  function handleAutoplay() {
+    const playPromise = bgMusic.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        document.body.addEventListener('click', function once() {
+          bgMusic.play();
+          document.body.removeEventListener('click', once);
+        });
+      });
+    }
+  }
+
+  // Sincronización entre páginas
+  if (sessionStorage.getItem('musicTime')) {
+    bgMusic.currentTime = parseFloat(sessionStorage.getItem('musicTime'));
+  }
+
+  // Guardar tiempo actual al salir de la página
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('musicTime', bgMusic.currentTime);
+  });
+
+  bgMusic.volume = 0.3; // Volumen bajo (30%)
+  handleAutoplay();
+});
