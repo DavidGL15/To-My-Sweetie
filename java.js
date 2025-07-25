@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const heart = document.createElement('div');
             heart.className = 'heart-bg';
             
-            // Posición pero es aleatoria por lo del random y vh/w para adaptarse
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.top = Math.random() * 100 + 'vh';
             
@@ -35,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
     createHearts();
 });
 document.addEventListener('DOMContentLoaded', function() {
-  // Reproducir a partir del minuto 1:30 (90 segundos)
 const bgMusic = document.getElementById('bg-music');
 bgMusic.currentTime = 30; // Segundos
 
