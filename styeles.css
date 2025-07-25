@@ -137,13 +137,10 @@ body {
     }
 }
 
-/* Asegúrate que el contenido esté sobre los corazones */
 .text {
     z-index: 10;
     position: relative;
 }
-
-/* Ajusta el canvas si lo usas */
 #canva {
     position: fixed;
     top: 0;
