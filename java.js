@@ -35,8 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 document.addEventListener('DOMContentLoaded', function() {
 const bgMusic = document.getElementById('bg-music');
-bgMusic.currentTime = 30; // Segundos
-
+bgMusic.currentTime = 30;
 // no se reinicia al cambiar de página
 window.addEventListener('beforeunload', () => {
   sessionStorage.setItem('musicTime', bgMusic.currentTime);
@@ -47,7 +46,7 @@ window.addEventListener('load', () => {
   if (savedTime) {
     bgMusic.currentTime = parseFloat(savedTime);
   } else {
-    bgMusic.currentTime = 30; // Inicio por defecto a los 90s
+    bgMusic.currentTime = 30;
   }
   bgMusic.play().catch(e => console.log("Autoplay bloqueado:", e));
 });
