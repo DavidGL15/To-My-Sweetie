@@ -1,18 +1,13 @@
 let florVisible = false;
-
-// Función para crear partículas (DEBE ESTAR FUERA de las otras funciones)
 function crearParticulas() {
   const heart = document.querySelector('.heart');
   const heartRect = heart.getBoundingClientRect();
   const centerX = heartRect.left + heartRect.width/2;
   const centerY = heartRect.top + heartRect.height/2;
   
-  // Crear 15 partículas
   for (let i = 0; i < 30; i++) {
     setTimeout(() => {
       const particula = document.createElement('div');
-      
-      // Estilos básicos de la partícula
       Object.assign(particula.style, {
         position: 'fixed',
         width: '25px',
@@ -27,8 +22,7 @@ function crearParticulas() {
       });
       
       document.body.appendChild(particula);
-      
-      // Animación con GSAP
+    
       gsap.to(particula, {
         x: `+=${(Math.random() - 0.5) * 500}`,
         y: `+=${(Math.random() - 0.5) * 500}`,
@@ -89,19 +83,18 @@ function windowResized() {
 const heart = document.querySelector(".heart");
 const mainContent = document.querySelector("#main-content");
 const letterContainer = document.querySelector("#letter-container");
-// Función modificada para crear partículas de corazones
 function crearParticulas() {
-  const colors = ["#ff3366", "#ff0066", "#ff1493", "#ff69b4", "#ff00ff"]; // Colores rosados/rojos
-  const particleCount = 100; // Cantidad de corazones
+  const colors = ["#ff3366", "#ff0066", "#ff1493", "#ff69b4", "#ff00ff"]; 
+  const particleCount = 100; 
   
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement("div");
-    particle.innerHTML = "❤"; // Corazón Unicode
-    // También puedes usar: particle.textContent = "♥";
+    particle.innerHTML = "❤";
+   
     
     // Estilos del corazón
     particle.style.position = "absolute";
-    particle.style.fontSize = `${Math.random() * 30 + 20}px`; // Tamaño aleatorio entre 10px y 30px
+    particle.style.fontSize = `${Math.random() * 30 + 20}px`; 
     particle.style.color = colors[Math.floor(Math.random() * colors.length)];
     particle.style.userSelect = "none";
     particle.style.pointerEvents = "none";
@@ -109,24 +102,23 @@ function crearParticulas() {
     particle.style.opacity = "0.8";
     particle.style.fontWeight = "bold";
     
-    // Posición inicial (centro del corazón)
+    // Posición inicial
     const heartRect = heart.getBoundingClientRect();
     particle.style.left = `${heartRect.left + heartRect.width / 2}px`;
     particle.style.top = `${heartRect.top + heartRect.height / 2}px`;
     
     document.body.appendChild(particle);
-    
-    // Animación GSAP para cada corazón
+  
     gsap.to(particle, {
-      x: (Math.random() - 0.5) * 800, // Movimiento horizontal aleatorio
-      y: (Math.random() - 0.5) * 800, // Movimiento vertical aleatorio
+      x: (Math.random() - 0.5) * 800, 
+      y: (Math.random() - 0.5) * 800, 
       opacity: 0,
       rotation: Math.random() * 360,
       scale: Math.random() * 0.5 + 0.5,
-      duration: Math.random() * 5 + 3, // Duración entre 2 y 5 segundos
+      duration: Math.random() * 5 + 3, 
       ease: "power1.out",
       onComplete: () => {
-        particle.remove(); // Eliminar el elemento cuando termina la animación
+        particle.remove(); 
       }
     });
   }
@@ -137,7 +129,7 @@ gsap.to(heart, {
   scale: 0.05,
   duration: 6,
   ease: "power2.inOut",
-  onStart: crearParticulas, // <-- Aquí llamamos a las partículas
+  onStart: crearParticulas, 
   onComplete: () => {
     heart.style.display = "none";
     mainContent.classList.remove("hidden");
@@ -183,7 +175,7 @@ $(document).ready(function(){
   });
 });
 
-// En tu archivo JS principal (ejecuta esto en ambas páginas)
+// Que se ejecute esto en ambas páginas
 document.addEventListener('DOMContentLoaded', function() {
 const bgMusic = document.getElementById('bg-music');
 bgMusic.currentTime = 30; // Segundos
@@ -202,14 +194,13 @@ window.addEventListener('load', () => {
   }
   bgMusic.play().catch(e => console.log("Autoplay bloqueado:", e));
 });
-  
-  // Intenta reproducir automáticamente y maneja errores
+  //errores
   function handleAutoplay() {
     const playPromise = bgMusic.play();
     
     if (playPromise !== undefined) {
       playPromise.catch(() => {
-        // Si el autoplay falla, espera a que el usuario interactúe con la página
+        // Si el autoplay falla
         document.body.addEventListener('click', function once() {
           bgMusic.play();
           document.body.removeEventListener('click', once);
